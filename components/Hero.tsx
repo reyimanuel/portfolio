@@ -117,7 +117,7 @@ export function Hero() {
                   <div className="flex">
                     <span className="w-24 text-fg-muted">stack</span>
                     <span className="mr-2 text-fg-muted">:</span>
-                    <span className="text-fg-secondary">golang, node, postgres</span>
+                    <span className="text-fg-secondary">nodejs, golang, postgres</span>
                   </div>
                   <div className="flex">
                     <span className="w-24 text-fg-muted">focus</span>

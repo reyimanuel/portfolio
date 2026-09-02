@@ -1,11 +1,10 @@
 import { Hero } from "@/components/Hero";
 import { ProjectsSection } from "@/components/ProjectsSection";
-import { FeaturedProject } from "@/components/FeaturedProject";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { EngineeringApproach } from "@/components/EngineeringApproach";
 import { TechStackSection } from "@/components/TechStackSection";
 import { MetricsSection } from "@/components/MetricsSection";
-import { LeadershipSection } from "@/components/LeadershipSection";
+import { CommunitySection } from "@/components/CommunitySection";
 import { AboutSection } from "@/components/AboutSection";
 import { ContactSection } from "@/components/ContactSection";
 
@@ -20,8 +19,7 @@ export default function Home() {
       <TechMarquee />
 
       <AboutSection />
-      <LeadershipSection />
-
+      <CommunitySection />
 
       {/* Thin divider */}
       <div className="mx-auto max-w-6xl px-6">
@@ -37,13 +35,12 @@ export default function Home() {
       </div>
 
       <ProjectsSection />
-      <FeaturedProject />
+      {/* <FeaturedProject /> */}
 
       {/* Thin divider */}
       <div className="mx-auto max-w-6xl px-6">
         <hr className="border-border-subtle" />
       </div>
-
 
       <TechStackSection />
       <MetricsSection />

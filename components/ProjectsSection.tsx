@@ -14,8 +14,8 @@ export function ProjectsSection() {
         />
 
         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </div>

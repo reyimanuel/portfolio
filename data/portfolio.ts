@@ -16,9 +16,6 @@ export interface Profile {
   github: string;
   linkedin: string;
   resume: string;
-  currentlyBuilding: string;
-  currentlyLearning: string;
-  interestedIn: string;
 }
 
 export interface Project {
@@ -26,12 +23,8 @@ export interface Project {
   title: string;
   category: string;
   description: string;
-  problem: string;
-  approach: string;
-  implementation: string;
-  contribution: string;
-  outcome: string;
   technologies: string[];
+  images: string[]; // 1–3 showcase images (paths relative to /public)
   github?: string;
   demo?: string;
   featured?: boolean;
@@ -61,7 +54,7 @@ export interface Metric {
   label: string;
 }
 
-export interface LeadershipItem {
+export interface CommunityItem {
   title: string;
   description: string;
   category: string;
@@ -75,7 +68,7 @@ export const profile: Profile = {
   name: "Miracle Sumajow",
   title: "Software Developer",
   subtitle: "Building reliable and enjoyable software experiences.",
-  location: "Your City, Country",
+  location: "Kota Manado, Indonesia",
   bio: 
 "I'm a Software Developer and Informatics Engineering graduate who enjoys turning requirements into practical software solutions." + "\n\n" +
 
@@ -86,9 +79,6 @@ export const profile: Profile = {
   github: "https://github.com/reyimanuel",
   linkedin: "https://linkedin.com/in/miraclesumajow",
   resume: "/cv-placeholder.pdf",
-  currentlyBuilding: "A distributed task scheduler",
-  currentlyLearning: "Systems design patterns & event-driven architecture",
-  interestedIn: "Open-source tooling, developer experience, UX-focused applications",
 };
 
 // ---------------------------------------------------------------------------
@@ -98,76 +88,70 @@ export const profile: Profile = {
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Relay API Platform",
-    category: "API Infrastructure",
+    title: "Report Formatter",
+    category: "Template-Based Document Generation",
     description:
-      "A centralized API gateway and management platform that standardized service communication across multiple internal teams. Handled authentication, rate limiting, request transformation, and observability.",
-    problem:
-      "Internal services communicated through inconsistent ad-hoc integrations. Each team maintained its own authentication logic, error formats, and retry strategies, leading to fragile cross-service dependencies.",
-    approach:
-      "Designed a unified API gateway layer that abstracted common concerns—auth, rate limiting, circuit breaking—away from individual services. Introduced contract-first API design using OpenAPI specifications.",
-    implementation:
-      "Built with Golang and PostgreSQL. Used JWT-based authentication with role-scoped access tokens. Implemented request/response transformation middleware and structured logging for observability. Deployed via Docker containers behind a reverse proxy.",
-    contribution:
-      "Architected the gateway core, built the middleware pipeline, designed the token lifecycle system, and wrote the OpenAPI tooling that auto-generated client SDKs for consuming teams.",
-    outcome:
-      "Reduced inter-service integration time by approximately 60%. Standardized error handling across 8+ services. Eliminated duplicated auth logic in 5 separate codebases.",
-    technologies: ["Golang", "PostgreSQL", "Docker", "REST API", "JWT", "OpenAPI"],
+      "An academic writing platform that automatically formats theses and research papers according to institutional standards, freeing writers to focus entirely on their work.",
+    technologies: ["Golang", "PostgreSQL", "LaTeX", "Next.js", "Docker", "REST API"],
+    images: [
+      "/projects/report-formatter 1.png",
+      "/projects/report-formatter 2.png",
+      "/projects/report-formatter 3.png",
+    ],
     featured: true,
   },
   {
     id: 2,
-    title: "DocForge",
-    category: "Document Automation",
+    title: "SPARK",
+    category: "Chatbot for Information Retrieval",
     description:
-      "An automated document generation system that transformed structured data into formatted PDFs, reports, and compliance documents. Replaced manual processes for multiple operational teams.",
-    problem:
-      "Operational teams spent significant hours each week manually assembling reports from spreadsheets and database exports. The process was error-prone and created bottlenecks during audit periods.",
-    approach:
-      "Developed a template-driven document engine that pulled data from existing databases and applied configurable formatting rules. Users could define document templates through a simple configuration interface.",
-    implementation:
-      "Backend built with NestJS and TypeScript. Used LaTeX for high-fidelity PDF rendering and a custom template DSL for defining document structures. PostgreSQL for template storage and generation history.",
-    contribution:
-      "Designed the template engine architecture, built the rendering pipeline, and implemented the scheduling system for automated report generation.",
-    outcome:
-      "Automated generation of 200+ documents monthly. Reduced report preparation time from hours to minutes. Eliminated formatting inconsistencies across compliance documents.",
-    technologies: ["NestJS", "TypeScript", "PostgreSQL", "LaTeX", "Docker", "REST API"],
+      "An intelligent chatbot that enables natural language information retrieval from structured databases. Users ask questions conversationally and receive instant, contextual answers without navigating complex interfaces.",
+    technologies: ["NestJS", "TypeScript", "PostgreSQL", "Docker", "REST API"],
+    images: [
+      "/projects/spark 1.png",
+      "/projects/spark 2.png",
+      "/projects/spark 3.png",
+    ],
   },
   {
     id: 3,
-    title: "VoteStream",
-    category: "Workflow Application",
+    title: "E-Voting",
+    category: "Real-Time Voting Platform",
     description:
-      "A real-time voting and decision-tracking platform designed for organizational governance. Supported multiple voting methods, quorum rules, and audit-ready result recording.",
-    problem:
-      "Governance decisions were tracked through email threads and spreadsheets, making it difficult to verify quorum, audit vote history, or ensure procedural compliance.",
-    approach:
-      "Built a structured workflow engine that modeled different voting procedures as configurable state machines. Each decision followed a defined lifecycle from proposal through resolution.",
-    implementation:
-      "Full-stack application with Next.js frontend and Laravel backend. Real-time updates via WebSocket connections. Role-based access control with granular permissions per organization unit.",
-    contribution:
-      "Designed the voting state machine, implemented the real-time sync layer, and built the admin dashboard for managing organizational units and permissions.",
-    outcome:
-      "Processed 500+ governance decisions. Provided complete audit trail for compliance review. Reduced decision cycle time by approximately 40%.",
-    technologies: ["Laravel", "Next.js", "MySQL", "Redis", "WebSocket", "REST API"],
+      "A digital voting platform that makes organizational elections accessible and straightforward. Delivers a clear, reliable user experience with consistent interface design across all voting scenarios, removing barriers to participation.",
+    technologies: ["Golang", "Next.js", "PostgreSQL", "REST API"],
+    images: [
+      "/projects/e-voting 1.png",
+      "/projects/e-voting 2.png",
+      "/projects/e-voting 3.png",
+      "/projects/e-voting 4.png",
+    ],
   },
   {
     id: 4,
-    title: "DevKit CLI",
-    category: "Developer Tooling",
+    title: "Suluun Tiga",
+    category: "Village Information System",
     description:
-      "A command-line toolkit that automated common development workflows—scaffolding, environment setup, database migrations, and deployment preparation—for a team of 10+ developers.",
-    problem:
-      "Developers spent time on repetitive setup tasks: configuring environments, running migration sequences, preparing deployment artifacts. The lack of standardization caused environment-specific bugs.",
-    approach:
-      "Created an opinionated CLI tool that encoded team conventions into executable commands. Each command encapsulated a multi-step workflow with validation and rollback capabilities.",
-    implementation:
-      "Built in Golang with a plugin architecture for extensibility. Configuration via YAML files. Integrated with Git hooks for pre-commit validation and Docker for environment standardization.",
-    contribution:
-      "Sole developer. Designed the plugin system, built core commands, wrote documentation, and facilitated adoption across the engineering team.",
-    outcome:
-      "Standardized development setup across 10+ engineers. Reduced onboarding environment setup from a full day to under 30 minutes. Eliminated a class of deployment-related configuration bugs.",
-    technologies: ["Golang", "Docker", "Git", "YAML", "CLI"],
+      "A village information system that gives residents and tourists access to local data, services, and community resources in one place.",
+    technologies: ["Next.js", "Git", "React", "TypeScript"],
+    images: [
+      "/projects/suluun-tiga 1.png",
+      "/projects/suluun-tiga 2.png",
+      "/projects/suluun-tiga 3.png",
+    ],
+  },
+    {
+    id: 5,
+    title: "Leilem Tiga",
+    category: "Village Information System",
+    description:
+      "A comprehensive information system for a rural village, providing residents and touristswith access to local data, services, and community resources.",
+    technologies: ["Next.js", "Git", "React", "TypeScript"],
+    images: [
+      "/projects/leilem-tiga 1.png",
+      "/projects/leilem-tiga 2.png",
+      "/projects/leilem-tiga 3.png",
+    ],
   },
 ];
 
@@ -177,60 +161,63 @@ export const projects: Project[] = [
 
 export const experiences: Experience[] = [
   {
-    role: "Backend / Engineering Coordinator",
-    organization: "Placeholder Organization",
+    role: "Senior Backend Developer Unity Project Team E-Voting",
+    organization: "UNSRAT IT Community",
     period: "2026",
     description:
-      "Coordinating backend architecture decisions and mentoring junior developers while continuing to ship production features.",
+      "Contributed to the development of the E-Voting application in a backend team with one senior and two junior developers. Coordinated task discussions and development work, while mentoring junior developers and guiding them in backend development, project workflows, and business processes.",
     responsibilities: [
-      "Leading API design reviews and architectural discussions",
-      "Mentoring 3 junior developers through code review and pairing sessions",
-      "Building internal tooling to improve developer workflow",
-      "Coordinating cross-team technical initiatives",
+      "Coordinated backend development tasks and discussions with the team to ensure smooth progress and alignment with project goals.",
+      "Mentored junior developers, providing guidance on backend development best practices, project workflows, and business processes.",
+      "Reviewed code contributions from junior developers, providing constructive feedback and suggestions for improvement.",
+      "Assisted in the design and implementation of backend features, ensuring they met project requirements and adhered to best practices.",
+      "Collaborated with other team members to troubleshoot issues, optimize performance, and ensure the overall quality of the application.",
     ],
-    technologies: ["Golang", "NestJS", "PostgreSQL", "Docker", "Git"],
+    technologies: ["Golang", "PostgreSQL", "REST API","JWT"],
   },
-  {
-    role: "Senior Backend Developer",
-    organization: "Placeholder Project B",
-    period: "2025–2026",
-    description:
-      "Owned the backend architecture for a document automation platform. Designed and shipped the core rendering pipeline and API layer.",
-    responsibilities: [
-      "Architected the document generation engine and template system",
-      "Designed RESTful APIs consumed by frontend and external integrations",
-      "Implemented CI/CD pipelines and containerized deployment",
-      "Conducted technical interviews and onboarded new engineers",
-    ],
-    technologies: ["NestJS", "TypeScript", "PostgreSQL", "Docker", "LaTeX"],
-  },
-  {
-    role: "Backend Developer",
-    organization: "Placeholder Project A",
-    period: "2025",
-    description:
-      "Built core backend services for a real-time voting platform. Focused on data integrity, state management, and real-time synchronization.",
-    responsibilities: [
-      "Implemented voting workflow state machine with transactional guarantees",
-      "Built WebSocket layer for real-time vote synchronization",
-      "Designed role-based access control system",
-      "Wrote integration tests covering critical governance workflows",
-    ],
-    technologies: ["Laravel", "MySQL", "Redis", "WebSocket", "REST API"],
-  },
-  {
-    role: "Backend Developer",
-    organization: "Placeholder Project (Early Career)",
+      {
+    role: "Backend Developer Web-Dev.XML",
+    organization: "UNSRAT IT Community",
     period: "2024",
     description:
-      "First professional backend role. Contributed to an API gateway project, learning production-grade Golang and distributed system patterns.",
+      "Contributed to the development of a web-based information system for a university community. Focused on backend services, database design, and API development.",
     responsibilities: [
-      "Built middleware components for request validation and transformation",
-      "Implemented structured logging and basic observability tooling",
-      "Contributed to API documentation and OpenAPI specifications",
-      "Participated in code reviews and engineering discussions",
+      "Facilitated daily Scrum meetings to share progress, discuss blockers, and align priorities with the team.",
+      "Participated in sprint planning and sprint review sessions to support project delivery and team coordination.",
+      "Developed backend endpoints and API logic to support application features and business requirements.",
+      "Maintained code readability and structure by writing organized, maintainable code and improving implementation consistency.",
+      "Discussed system flow and logic with other developers to align technical decisions and improve overall implementation quality.",
     ],
-    technologies: ["Golang", "PostgreSQL", "Docker", "REST API", "JWT"],
+    technologies: ["Laravel", "PostgreSQL", "Docker", "REST API", "JWT"],
+  },
+  {
+    role: "Backend Developer Cross Engineering Team TECHOFEST Grand Project",
+    organization: "UNSRAT IT Community",
+    period: "2024",
+    description:
+      "Contributed to Report Formatter and Spark by developing backend services with Golang and NestJS, building REST API endpoints, and creating OpenAPI documentation for the Report Formatter API as part of a team workflow.",
+    responsibilities: [
+      "Served as a backup backend developer, supporting the team with backend responsibilities when needed.",
+      "Participated in daily Scrum meetings and attended sprint planning and sprint review sessions.",
+      "Focused on maintaining API responses and payload structures to ensure consistency and reliability.",
+      "Contributed to API documentation to keep endpoints clear and easy to understand for the team and consumers.",
+    ],
+    technologies: ["NestJS", "Golang", "PostgreSQL", "REST API", "Swagger / OpenAPI"],
+  },
+  {
+    role: "Backend Developer Unity Project Team Beyond Unity",
+    organization: "UNSRAT IT Community x Renify",
+    period: "2025",
+    description:
+      "Continued development of Report Formatter by implementing endpoints for chapters, subchapters, subpoints, image management, and file downloads. Refactored existing APIs, standardized API responses, strengthened API security, and maintained clean, structured, and maintainable code.",
+    responsibilities: [
+      "Implemented new backend endpoints for chapters, subchapters, subpoints, image management, and file downloads.",
+      "Refactored existing APIs to improve code structure, maintainability, and performance.",
+      "Standardized API responses and payload structures for consistency across the application.",
+      "Strengthened API security by implementing authentication, authorization, and input validation.",
+      "Maintained clean, structured, and maintainable code to facilitate future development and collaboration.",
+    ],
+    technologies: ["Golang", "Next.js", "PostgreSQL", "LaTeX", "REST API"],
   },
 ];
 
@@ -278,11 +265,11 @@ export const principles: Principle[] = [
 export const skills: SkillCategory[] = [
   {
     category: "Backend",
-    items: ["Golang", "NestJS", "Laravel", "Node.js"],
+    items: ["Golang", "NestJS", "Laravel"],
   },
   {
     category: "Database",
-    items: ["PostgreSQL", "MySQL", "Redis"],
+    items: ["PostgreSQL", "MySQL", "MariaDB"],
   },
   {
     category: "API / Architecture",
@@ -298,7 +285,7 @@ export const skills: SkillCategory[] = [
   },
   {
     category: "Other",
-    items: ["Firebase", "LaTeX", "PWA / TWA", "Linux"],
+    items: ["Firebase", "LaTeX", "PWA / TWA", "Flutter", "Kotlin"],
   },
 ];
 
@@ -307,46 +294,40 @@ export const skills: SkillCategory[] = [
 // ---------------------------------------------------------------------------
 
 export const metrics: Metric[] = [
-  { value: "05+", label: "Projects Shipped" },
-  { value: "03+", label: "Years Building Software" },
-  { value: "10+", label: "Developers Collaborated With" },
-  { value: "15+", label: "Technologies Used" },
+  { value: "02+", label: "Projects Shipped" },
+  { value: "02+", label: "Years Building Software" },
+  { value: "8+", label: "Developers Collaborated With" },
+  { value: "10+", label: "Technologies Used" },
 ];
 
 // ---------------------------------------------------------------------------
-// Leadership & Community
+// Community
 // ---------------------------------------------------------------------------
 
-export const leadership: LeadershipItem[] = [
+export const community: CommunityItem[] = [
   {
-    title: "Technical Mentoring",
+    title: "Backend Division Coordinator - UNSRAT IT Community",
     description:
-      "Guided junior developers through code reviews, pairing sessions, and structured learning paths focused on backend fundamentals.",
+      "Designed and led a 5-session backend learning program for 10+ university students. Managed curriculum design, session planning, speaker coordination, and learning assessments.",
     category: "Mentoring",
   },
   {
-    title: "Workshop Facilitation",
+    title: "Workshop Assistant of Community Partnership Program of Informatics Lecturers",
     description:
-      "Planned and led technical workshops on API design patterns, Git workflows, and containerization for development teams.",
-    category: "Education",
-  },
-  {
-    title: "Cross-Team Coordination",
-    description:
-      "Facilitated technical alignment between frontend and backend teams during multi-service integration projects.",
+        "Assisted in organizing and facilitating a technical workshop for participant, helped with technical setup, and participant support.",
     category: "Coordination",
   },
   {
-    title: "Knowledge Sharing",
+    title: "Vice-Coordinator of Pre-Christmas Event - Himpunan Mahasiswa Elektro",
     description:
-      "Established internal documentation practices and contributed to a shared engineering knowledge base covering architecture decisions.",
-    category: "Communication",
+      "Coordinated event planning and logistics across divisions. Managed venue selection, performer scheduling, external partnerships, and day-of execution.",
+    category: "Coordination",
   },
   {
-    title: "Event Organization",
+    title: "Vice-Coordinator of Social Service Event - Himpunan Mahasiswa Elektro",
     description:
-      "Coordinated developer meetups and internal tech talks, creating space for knowledge exchange across engineering disciplines.",
-    category: "Community",
+      "Planned and executed a large-scale student community event. Managed venue selection, budget coordination, logistics, performer scheduling, and event day supervision.",
+    category: "Leadership",
   },
 ];
 
@@ -356,8 +337,8 @@ export const leadership: LeadershipItem[] = [
 
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
 ];

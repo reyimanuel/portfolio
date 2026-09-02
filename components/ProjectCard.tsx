@@ -1,68 +1,119 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import type { Project } from "@/data/portfolio";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
-  const number = String(index + 1).padStart(2, "0");
+export function ProjectCard({ project }: ProjectCardProps) {
+  const [activeImage, setActiveImage] = useState(0);
+  const hasMultipleImages = project.images.length > 1;
 
   return (
-    <article className="group rounded-lg border border-border-primary transition-all duration-300 hover:border-fg-muted/20">
-      {/* Header */}
-      <div className="p-6 md:p-8">
-        <div className="flex items-start justify-between">
-          <span className="font-mono text-5xl font-bold leading-none text-fg-muted/15 md:text-6xl">
-            {number}
-          </span>
-          <span className="rounded-sm bg-accent-muted px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-accent">
-            {project.category}
-          </span>
-        </div>
+    <article className="group overflow-hidden rounded-lg border border-border-primary transition-colors duration-300 hover:border-fg-muted/20">
+      {/* Image showcase */}
+      <div className="relative aspect-16/10 w-full overflow-hidden bg-bg-secondary">
+        {project.images.length > 0 ? (
+          <>
+            {/* Active image */}
+            <Image
+              src={project.images[activeImage]}
+              alt={`${project.title} — screenshot ${activeImage + 1}`}
+              fill
+              loading="eager"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
 
-        <h3 className="mt-6 text-xl font-semibold text-fg-primary transition-colors group-hover:text-accent md:text-2xl">
+            {/* Image overlay gradient */}
+            <div className="absolute inset-0 bg-linear-to-t from-bg-primary/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+            {/* Thumbnail dots / selectors */}
+            {hasMultipleImages && (
+              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5">
+                {project.images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImage(i)}
+                    className={`h-1.5 rounded-full transition-all duration-200 ${
+                      i === activeImage
+                        ? "w-6 bg-accent"
+                        : "w-1.5 bg-fg-muted/40 hover:bg-fg-muted/70"
+                    }`}
+                    aria-label={`View screenshot ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          /* Placeholder when no images */
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-mono text-xs text-fg-muted">
+              No preview available
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="p-5 md:p-6">
+        {/* Category */}
+        <span className="rounded-sm bg-accent-muted px-2 py-0.5 font-mono text-xs uppercase tracking-wider text-accent">
+          {project.category}
+        </span>
+
+        {/* Title */}
+        <h3 className="mt-3 text-lg font-semibold text-fg-primary md:text-xl">
           {project.title}
         </h3>
 
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-fg-secondary">
+        {/* Description */}
+        <p className="mt-2 text-sm leading-relaxed text-fg-secondary line-clamp-3">
           {project.description}
         </p>
-      </div>
 
-      {/* Footer */}
-      <div className="px-6 pb-6 md:px-8 md:pb-8">
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* Tech tags */}
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-sm bg-bg-tertiary px-2 py-1 font-mono text-xs text-fg-tertiary"
+              className="rounded-sm bg-bg-tertiary px-2 py-0.5 font-mono text-xs text-fg-tertiary"
             >
               {tech}
             </span>
           ))}
         </div>
-
-        <div className="mt-6">
-          <span className="inline-flex items-center gap-1 font-mono text-sm text-accent transition-colors hover:text-accent-hover">
-            View Case Study
-            <svg
-              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </span>
-        </div>
       </div>
+
+      {/* Thumbnail strip (when multiple images) */}
+      {hasMultipleImages && (
+        <div className="flex gap-1 border-t border-border-subtle px-5 py-3 md:px-6">
+          {project.images.map((img, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveImage(i)}
+              className={`relative aspect-16/10 flex-1 overflow-hidden rounded-sm transition-all duration-200 ${
+                i === activeImage
+                  ? "ring-1 ring-accent ring-offset-1 ring-offset-bg-primary"
+                  : "opacity-50 hover:opacity-80"
+              }`}
+              aria-label={`View screenshot ${i + 1}`}
+            >
+              <Image
+                src={img}
+                alt={`${project.title} — thumbnail ${i + 1}`}
+                fill
+                className="object-cover"
+                sizes="120px"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </article>
   );
 }
