@@ -7,7 +7,7 @@ export function TechStackSection() {
     <section id="skills" className="py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          number="04"
+          number="06"
           label="STACK"
           title="Technologies"
           description="Tools and technologies I work with regularly."

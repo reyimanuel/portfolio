@@ -10,7 +10,7 @@ export function ExperienceTimeline() {
     >
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          number="02"
+          number="03"
           label="EXPERIENCE"
           title="Engineering Timeline"
         />

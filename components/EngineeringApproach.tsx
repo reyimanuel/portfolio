@@ -6,7 +6,7 @@ export function EngineeringApproach() {
     <section className="py-24 md:py-32" aria-labelledby="approach-title">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          number="03"
+          number="04"
           label="APPROACH"
           title="How I Build"
           description="Principles that guide my engineering decisions."

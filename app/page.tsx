@@ -9,18 +9,19 @@ import { LeadershipSection } from "@/components/LeadershipSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ContactSection } from "@/components/ContactSection";
 
+import { TechMarquee } from "@/components/TechMarquee";
+
 export default function Home() {
   return (
     <>
       <Hero />
 
-      {/* Thin divider */}
-      <div className="mx-auto max-w-6xl px-6">
-        <hr className="border-border-subtle" />
-      </div>
+      {/* Tech marquee divider */}
+      <TechMarquee />
 
-      <ProjectsSection />
-      <FeaturedProject />
+      <AboutSection />
+      <LeadershipSection />
+
 
       {/* Thin divider */}
       <div className="mx-auto max-w-6xl px-6">
@@ -35,16 +36,17 @@ export default function Home() {
         <hr className="border-border-subtle" />
       </div>
 
-      <TechStackSection />
-      <MetricsSection />
+      <ProjectsSection />
+      <FeaturedProject />
 
       {/* Thin divider */}
       <div className="mx-auto max-w-6xl px-6">
         <hr className="border-border-subtle" />
       </div>
 
-      <LeadershipSection />
-      <AboutSection />
+
+      <TechStackSection />
+      <MetricsSection />
       <ContactSection />
     </>
   );

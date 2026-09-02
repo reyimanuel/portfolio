@@ -7,7 +7,7 @@ export function ProjectsSection() {
     <section id="projects" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader
-          number="01"
+          number="05"
           label="PROJECTS"
           title="Selected Work"
           description="A selection of projects that reflect how I approach engineering problems."

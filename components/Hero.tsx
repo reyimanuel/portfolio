@@ -26,10 +26,6 @@ export function Hero() {
               {profile.subtitle}
             </h1>
 
-            {/* Bio */}
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-secondary">
-              {profile.bio}
-            </p>
 
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-4">

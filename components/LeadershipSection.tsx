@@ -6,7 +6,7 @@ export function LeadershipSection() {
     <section className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader
-          number="05"
+          number="02"
           label="BEYOND CODE"
           title="Leadership & Community"
         />

@@ -72,18 +72,23 @@ export interface LeadershipItem {
 // ---------------------------------------------------------------------------
 
 export const profile: Profile = {
-  name: "Your Name",
-  title: "Backend Engineer",
-  subtitle: "Building reliable software systems.",
+  name: "Miracle Sumajow",
+  title: "Software Developer",
+  subtitle: "Building reliable and enjoyable software experiences.",
   location: "Your City, Country",
-  bio: "A software engineer focused on backend systems, API design, and building tools that solve real problems. Drawn to clean architecture, thoughtful abstractions, and code that other people can maintain.",
-  email: "your.email@placeholder.dev",
-  github: "https://github.com/your-username",
-  linkedin: "https://linkedin.com/in/your-profile",
+  bio: 
+"I'm a Software Developer and Informatics Engineering graduate who enjoys turning requirements into practical software solutions." + "\n\n" +
+
+"My experience spans backend development, web applications, mobile applications, and application development. I have worked with technologies such as Golang, NestJS, Laravel, Next.js, PostgreSQL, Flutter, Kotlin, and Unity, with a particular interest in building APIs, working with databases, and developing structured and maintainable software." + "\n\n" +
+
+"Beyond development, I've worked in collaborative development teams, mentored junior developers, assisted in teaching database and programming courses, and coordinated technical learning programs.",
+  email: "miraclesumajow32@gmail.com",
+  github: "https://github.com/reyimanuel",
+  linkedin: "https://linkedin.com/in/miraclesumajow",
   resume: "/cv-placeholder.pdf",
   currentlyBuilding: "A distributed task scheduler",
   currentlyLearning: "Systems design patterns & event-driven architecture",
-  interestedIn: "Open-source tooling, developer experience, technical writing",
+  interestedIn: "Open-source tooling, developer experience, UX-focused applications",
 };
 
 // ---------------------------------------------------------------------------
