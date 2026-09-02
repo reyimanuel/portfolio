@@ -16,13 +16,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name — Backend Engineer",
+  title: "Miracle Sumajow — Software Developer",
   description:
-    "Software engineer focused on backend systems, API design, and building tools that solve real problems.",
+    "Software developer focused on building reliable systems, APIs, and maintainable software that solve real problems.",
   openGraph: {
-    title: "Your Name — Backend Engineer",
+    title: "Miracle Sumajow — Software Developer",
     description:
-      "Software engineer focused on backend systems, API design, and building tools that solve real problems.",
+      "Software developer focused on building reliable systems, APIs, and maintainable software that solve real problems.",
     type: "website",
   },
 };

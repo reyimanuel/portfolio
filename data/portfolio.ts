@@ -78,7 +78,7 @@ export const profile: Profile = {
   email: "miraclesumajow32@gmail.com",
   github: "https://github.com/reyimanuel",
   linkedin: "https://linkedin.com/in/miraclesumajow",
-  resume: "/cv-placeholder.pdf",
+  resume: "/cv-miraclesumajow.pdf",
 };
 
 // ---------------------------------------------------------------------------
@@ -130,7 +130,7 @@ export const projects: Project[] = [
   {
     id: 4,
     title: "Suluun Tiga",
-    category: "Village Information System",
+    category: "Village Website",
     description:
       "A village information system that gives residents and tourists access to local data, services, and community resources in one place.",
     technologies: ["Next.js", "Git", "React", "TypeScript"],
@@ -143,7 +143,7 @@ export const projects: Project[] = [
     {
     id: 5,
     title: "Leilem Tiga",
-    category: "Village Information System",
+    category: "Village Website",
     description:
       "A comprehensive information system for a rural village, providing residents and touristswith access to local data, services, and community resources.",
     technologies: ["Next.js", "Git", "React", "TypeScript"],
@@ -151,6 +151,19 @@ export const projects: Project[] = [
       "/projects/leilem-tiga 1.png",
       "/projects/leilem-tiga 2.png",
       "/projects/leilem-tiga 3.png",
+    ],
+  },
+      {
+    id: 6,
+    title: "Paroki Bunda Teresa dari Calcutta",
+    category: "Church Website",
+    description:
+      "A church information system that provides parishioners and visitors with access to local data, services, and community resources in one place.",
+    technologies: ["Next.js", "Git", "React", "TypeScript"],
+    images: [
+      "/projects/paroki-bunda-teresa 1.png",
+      "/projects/paroki-bunda-teresa 2.png",
+      "/projects/paroki-bunda-teresa 3.png",
     ],
   },
 ];
@@ -175,35 +188,6 @@ export const experiences: Experience[] = [
     ],
     technologies: ["Golang", "PostgreSQL", "REST API","JWT"],
   },
-      {
-    role: "Backend Developer Web-Dev.XML",
-    organization: "UNSRAT IT Community",
-    period: "2024",
-    description:
-      "Contributed to the development of a web-based information system for a university community. Focused on backend services, database design, and API development.",
-    responsibilities: [
-      "Facilitated daily Scrum meetings to share progress, discuss blockers, and align priorities with the team.",
-      "Participated in sprint planning and sprint review sessions to support project delivery and team coordination.",
-      "Developed backend endpoints and API logic to support application features and business requirements.",
-      "Maintained code readability and structure by writing organized, maintainable code and improving implementation consistency.",
-      "Discussed system flow and logic with other developers to align technical decisions and improve overall implementation quality.",
-    ],
-    technologies: ["Laravel", "PostgreSQL", "Docker", "REST API", "JWT"],
-  },
-  {
-    role: "Backend Developer Cross Engineering Team TECHOFEST Grand Project",
-    organization: "UNSRAT IT Community",
-    period: "2024",
-    description:
-      "Contributed to Report Formatter and Spark by developing backend services with Golang and NestJS, building REST API endpoints, and creating OpenAPI documentation for the Report Formatter API as part of a team workflow.",
-    responsibilities: [
-      "Served as a backup backend developer, supporting the team with backend responsibilities when needed.",
-      "Participated in daily Scrum meetings and attended sprint planning and sprint review sessions.",
-      "Focused on maintaining API responses and payload structures to ensure consistency and reliability.",
-      "Contributed to API documentation to keep endpoints clear and easy to understand for the team and consumers.",
-    ],
-    technologies: ["NestJS", "Golang", "PostgreSQL", "REST API", "Swagger / OpenAPI"],
-  },
   {
     role: "Backend Developer Unity Project Team Beyond Unity",
     organization: "UNSRAT IT Community x Renify",
@@ -218,6 +202,35 @@ export const experiences: Experience[] = [
       "Maintained clean, structured, and maintainable code to facilitate future development and collaboration.",
     ],
     technologies: ["Golang", "Next.js", "PostgreSQL", "LaTeX", "REST API"],
+  },
+    {
+    role: "Backend Developer Cross Engineering Team TECHOFEST Grand Project",
+    organization: "UNSRAT IT Community",
+    period: "2024",
+    description:
+      "Contributed to Report Formatter and Spark by developing backend services with Golang and NestJS, building REST API endpoints, and creating OpenAPI documentation for the Report Formatter API as part of a team workflow.",
+    responsibilities: [
+      "Served as a backup backend developer, supporting the team with backend responsibilities when needed.",
+      "Participated in daily Scrum meetings and attended sprint planning and sprint review sessions.",
+      "Focused on maintaining API responses and payload structures to ensure consistency and reliability.",
+      "Contributed to API documentation to keep endpoints clear and easy to understand for the team and consumers.",
+    ],
+    technologies: ["NestJS", "Golang", "PostgreSQL", "REST API", "Swagger / OpenAPI"],
+  },
+  {
+    role: "Backend Developer Web-Dev.XML",
+    organization: "UNSRAT IT Community",
+    period: "2024",
+    description:
+      "Contributed to the development of a web-based information system for a university community. Focused on backend services, database design, and API development.",
+    responsibilities: [
+      "Facilitated daily Scrum meetings to share progress, discuss blockers, and align priorities with the team.",
+      "Participated in sprint planning and sprint review sessions to support project delivery and team coordination.",
+      "Developed backend endpoints and API logic to support application features and business requirements.",
+      "Maintained code readability and structure by writing organized, maintainable code and improving implementation consistency.",
+      "Discussed system flow and logic with other developers to align technical decisions and improve overall implementation quality.",
+    ],
+    technologies: ["Laravel", "PostgreSQL", "Docker", "REST API", "JWT"],
   },
 ];
 
