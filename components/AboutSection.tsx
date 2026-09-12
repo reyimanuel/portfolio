@@ -15,7 +15,13 @@ export function AboutSection() {
               {profile.bio}
             </p>
             <p className="mt-4 leading-relaxed text-fg-secondary">
-              Currently based in {profile.location}. I build clean, maintainable software that scales from APIs and databases to full-stack applications. I enjoy solving complex problems with thoughtful design and code others can learn from.
+              Currently based in {profile.location}.{" "}
+              <a
+                href="#contact"
+                className="text-accent underline-offset-4 hover:underline"
+              >
+                Contact me for more info!
+              </a>
             </p>
           </div>
 

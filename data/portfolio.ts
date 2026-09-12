@@ -72,7 +72,7 @@ export const profile: Profile = {
   bio: 
 "I'm a Software Developer and Informatics Engineering graduate who enjoys turning requirements into practical software solutions." + "\n\n" +
 
-"My experience spans backend development, web applications, mobile applications, and application development. I have worked with technologies such as Golang, NestJS, Laravel, Next.js, PostgreSQL, Flutter, Kotlin, and Unity, with a particular interest in building APIs, working with databases, and developing structured and maintainable software." + "\n\n" +
+"My experience spans backend development, web applications, mobile applications, and application development. I have worked with technologies such as Golang, NestJS, Laravel, Next.js, PostgreSQL, Flutter, Kotlin, and always strive to learn new technologies and improve my skills, with a particular interest in building APIs, working with databases, and developing structured and maintainable software." + "\n\n" +
 
 "Beyond development, I've worked in collaborative development teams, mentored junior developers, assisted in teaching database and programming courses, and coordinated technical learning programs.",
   email: "miraclesumajow32@gmail.com",
@@ -334,7 +334,7 @@ export const community: CommunityItem[] = [
     title: "Vice-Coordinator of Pre-Christmas Event - Himpunan Mahasiswa Elektro",
     description:
       "Coordinated event planning and logistics across divisions. Managed venue selection, performer scheduling, external partnerships, and day-of execution.",
-    category: "Coordination",
+    category: "Leadership",
   },
   {
     title: "Vice-Coordinator of Social Service Event - Himpunan Mahasiswa Elektro",
