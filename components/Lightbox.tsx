@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 
@@ -129,6 +129,34 @@ export function Lightbox({
     setIndex((currentIndex - 1 + images.length) % images.length);
   }, [currentIndex, images.length, setIndex]);
 
+  // Touch swipe support for mobile
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    
+    // threshold of 40px to trigger swipe
+    if (distance > 40 && images.length > 1) {
+      goNext();
+    } else if (distance < -40 && images.length > 1) {
+      goPrev();
+    }
+    
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -211,18 +239,31 @@ export function Lightbox({
 
       {/* Main Image Container — Animated directly via inline styles for FLIP effect */}
       <div
-        className="absolute z-10 flex items-center justify-center overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto"
+        className="absolute z-10 flex items-center justify-center overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto touch-pan-y"
         style={style}
         onClick={(e) => e.stopPropagation()} // don't close when clicking the image itself
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
-        <Image
-          src={images[currentIndex]}
-          alt={`${alt} — preview ${currentIndex + 1}`}
-          fill
-          className="rounded-lg object-contain drop-shadow-2xl select-none"
-          sizes="(max-width: 1024px) 95vw, 1200px"
-          priority
-        />
+        <div
+          className="flex h-full w-full transition-transform duration-300 ease-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((img, idx) => (
+            <div key={idx} className="relative h-full w-full shrink-0 flex items-center justify-center">
+              <Image
+                src={img}
+                alt={`${alt} — preview ${idx + 1}`}
+                fill
+                className="rounded-lg object-contain drop-shadow-2xl select-none"
+                sizes="(max-width: 1024px) 95vw, 1200px"
+                priority // Preload all images inside the lightbox track
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Navigation arrows (desktop & tablet) */}

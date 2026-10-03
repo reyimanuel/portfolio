@@ -13,15 +13,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const hasMultipleImages = project.images.length > 1;
 
   const showcaseRef = useRef<HTMLDivElement>(null);
   const [lightboxRect, setLightboxRect] = useState<DOMRect | null>(null);
-
-  useEffect(() => {
-    setImageLoaded(false);
-  }, [activeImage]);
 
   return (
     <>
@@ -45,31 +40,35 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.images.length > 0 ? (
             <>
               {/* Ambient soft glow background from image colors */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-                <Image
-                  src={project.images[activeImage]}
-                  alt=""
-                  fill
-                  className="object-cover blur-2xl opacity-20 scale-125"
-                  aria-hidden="true"
-                />
+              <div className="absolute inset-0 overflow-hidden pointer-events-none select-none bg-bg-secondary">
+                {project.images.map((img, idx) => (
+                  <Image
+                    key={`ambient-${img}`}
+                    src={img}
+                    alt=""
+                    fill
+                    className={`object-cover blur-2xl scale-125 transition-opacity duration-500 ${
+                      idx === activeImage ? "opacity-20" : "opacity-0"
+                    }`}
+                    aria-hidden="true"
+                  />
+                ))}
               </div>
 
-              {/* Loading skeleton */}
-              {!imageLoaded && (
-                <div className="absolute inset-0 z-10 animate-pulse bg-bg-tertiary" />
-              )}
-
-              {/* Foreground main image: object-contain prevents cropping of portrait images */}
-              <Image
-                src={project.images[activeImage]}
-                alt={`${project.title} — screenshot ${activeImage + 1}`}
-                fill
-                loading="eager"
-                onLoad={() => setImageLoaded(true)}
-                className="relative z-10 object-contain p-2.5 sm:p-3 transition-transform duration-500 group-hover:scale-[1.02] drop-shadow-md"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              {/* Foreground main images: preloaded in DOM, toggled via opacity */}
+              {project.images.map((img, idx) => (
+                <Image
+                  key={`main-${img}`}
+                  src={img}
+                  alt={`${project.title} — screenshot ${idx + 1}`}
+                  fill
+                  priority={idx === 0} // Ensure the first image loads immediately
+                  className={`relative z-10 object-contain p-2.5 sm:p-3 transition-all duration-500 drop-shadow-md group-hover:scale-[1.02] ${
+                    idx === activeImage ? "opacity-100" : "opacity-0 pointer-events-none"
+                  }`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              ))}
 
               {/* Subtle hover gradient */}
               <div className="absolute inset-0 z-20 bg-linear-to-t from-bg-primary/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
