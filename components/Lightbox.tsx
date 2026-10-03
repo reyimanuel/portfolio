@@ -274,7 +274,7 @@ export function Lightbox({
               e.stopPropagation();
               goPrev();
             }}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
+            className={`absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
               isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
             }`}
             aria-label="Previous image"
@@ -298,7 +298,7 @@ export function Lightbox({
               e.stopPropagation();
               goNext();
             }}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
+            className={`absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
               isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"
             }`}
             aria-label="Next image"
