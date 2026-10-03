@@ -153,7 +153,7 @@ export const projects: Project[] = [
       "/projects/leilem-tiga 3.png",
     ],
   },
-      {
+    {
     id: 6,
     title: "Paroki Bunda Teresa dari Calcutta",
     category: "Church Website",
@@ -164,6 +164,18 @@ export const projects: Project[] = [
       "/projects/paroki-bunda-teresa 1.png",
       "/projects/paroki-bunda-teresa 2.png",
       "/projects/paroki-bunda-teresa 3.png",
+    ],
+  },      {
+    id: 6,
+    title: "Siklusku",
+    category: "MSME Accounting & Storefront Web Platform",
+    description:
+      "A full-stack web application delivering end-to-end double-entry bookkeeping, automated financial reporting, and digital storefront management tailored for small and medium-sized enterprises (MSMEs).",
+    technologies: ["Laravel", "MySQL", "Tailwind CSS", "PHP"],
+    images: [
+      "/projects/skilusku 1.png",
+      "/projects/skilusku 2.png",
+      "/projects/skilusku 3.png",
     ],
   },
 ];
