@@ -58,21 +58,13 @@ export function Hero() {
               {profile.title}
             </p>
 
-            {/* Main headline — display font */}
+            {/* Main headline */}
             <h1
-              className="font-display text-4xl font-normal italic leading-[1.1] tracking-tight text-fg-primary text-balance sm:text-5xl md:text-6xl lg:text-7xl"
+              className="text-4xl font-normal leading-[1.1] tracking-tight text-fg-primary text-balance sm:text-5xl md:text-6xl lg:text-7xl"
               style={getRevealStyle(200)}
             >
               {profile.subtitle}
             </h1>
-
-            {/* Bio brief */}
-            <p
-              className="mt-6 max-w-xl text-base text-fg-secondary leading-relaxed sm:text-lg"
-              style={getRevealStyle(300)}
-            >
-              {profile.bio}
-            </p>
 
             {/* CTAs */}
             <div
@@ -130,10 +122,7 @@ export function Hero() {
           </div>
 
           {/* Right side — 3D Interactive System Map */}
-          <div
-            className="mt-10 w-full shrink-0 md:mt-0 md:w-[420px] lg:w-[460px] h-[360px] lg:h-[400px]"
-            style={getRevealStyle(300)}
-          >
+          <div className="mt-10 w-full shrink-0 md:mt-0 md:w-105 lg:w-115 h-90 lg:h-100" style={getRevealStyle(300)}>
             <SystemMap />
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import type { Project } from "@/data/portfolio";
 import { Lightbox } from "@/components/Lightbox";
@@ -16,6 +16,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const hasMultipleImages = project.images.length > 1;
 
+  const showcaseRef = useRef<HTMLDivElement>(null);
+  const [lightboxRect, setLightboxRect] = useState<DOMRect | null>(null);
+
   useEffect(() => {
     setImageLoaded(false);
   }, [activeImage]);
@@ -25,11 +28,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <article className="group overflow-hidden rounded-xl border border-border-primary bg-bg-primary transition-all duration-300 hover:border-fg-muted/30 hover:shadow-xl">
         {/* Image showcase — supports both portrait and landscape gracefully */}
         <div
-          className={`relative aspect-[16/10] w-full overflow-hidden bg-bg-secondary/70 flex items-center justify-center ${
+          ref={showcaseRef}
+          className={`relative aspect-16/10 w-full overflow-hidden bg-bg-secondary/70 flex items-center justify-center ${
             project.images.length > 0 ? "cursor-pointer" : ""
           }`}
           onClick={() => {
             if (project.images.length > 0) {
+              if (showcaseRef.current) {
+                setLightboxRect(showcaseRef.current.getBoundingClientRect());
+              }
               setLightboxIndex(activeImage);
               setLightboxOpen(true);
             }
@@ -65,7 +72,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               />
 
               {/* Subtle hover gradient */}
-              <div className="absolute inset-0 z-20 bg-gradient-to-t from-bg-primary/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
+              <div className="absolute inset-0 z-20 bg-linear-to-t from-bg-primary/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
 
               {/* Expand to Lightbox icon overlay */}
               <div className="absolute top-3 right-3 z-30 flex h-8 w-8 items-center justify-center rounded-md border border-border-primary/80 bg-bg-primary/90 text-fg-secondary shadow-md opacity-0 transition-opacity duration-200 group-hover:opacity-100">
@@ -178,6 +185,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           images={project.images}
           alt={project.title}
           initialIndex={lightboxIndex}
+          triggerRect={lightboxRect}
+          onIndexChange={setActiveImage}
           onClose={() => setLightboxOpen(false)}
         />
       )}

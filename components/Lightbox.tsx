@@ -9,48 +9,125 @@ interface LightboxProps {
   alt: string;
   initialIndex?: number;
   onClose: () => void;
+  triggerRect?: DOMRect | null;
+  onIndexChange?: (index: number) => void;
 }
 
 /**
  * Accessible fullscreen image lightbox with keyboard navigation.
  * Uses createPortal to attach directly to document.body, completely preventing
  * parent CSS stacking context / transform containment clipping bugs.
- * Features smooth opening/closing transitions and image navigation.
+ * Features FLIP animation (shared element transition) when opening/closing from a source rect.
  */
 export function Lightbox({
   images,
   alt,
   initialIndex = 0,
   onClose,
+  triggerRect,
+  onIndexChange,
 }: LightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Standard viewport bounds for the expanded image
+  const TARGET_TOP = "12.5vh";
+  const TARGET_LEFT = "4vw";
+  const TARGET_WIDTH = "92vw";
+  const TARGET_HEIGHT = "75vh";
+
+  // State to manage the FLIP transition style for the image wrapper
+  const [style, setStyle] = useState<React.CSSProperties>(
+    triggerRect
+      ? {
+          top: `${triggerRect.top}px`,
+          left: `${triggerRect.left}px`,
+          width: `${triggerRect.width}px`,
+          height: `${triggerRect.height}px`,
+          opacity: 1, // Keep fully opaque to simulate lifting from the page
+        }
+      : {
+          top: TARGET_TOP,
+          left: TARGET_LEFT,
+          width: TARGET_WIDTH,
+          height: TARGET_HEIGHT,
+          opacity: 0,
+          transform: "scale(0.95)",
+        }
+  );
+
   useEffect(() => {
     setMounted(true);
-    // Trigger smooth entrance animation on next frame
+    // Double requestAnimationFrame ensures initial strict styles are painted BEFORE transitioning
     const timer = requestAnimationFrame(() => {
-      setIsOpen(true);
+      requestAnimationFrame(() => {
+        setIsOpen(true);
+        if (triggerRect) {
+          setStyle({
+            top: TARGET_TOP,
+            left: TARGET_LEFT,
+            width: TARGET_WIDTH,
+            height: TARGET_HEIGHT,
+            opacity: 1,
+            transform: "scale(1)", // Ensure final scale is 1
+          });
+        } else {
+          setStyle({
+            top: TARGET_TOP,
+            left: TARGET_LEFT,
+            width: TARGET_WIDTH,
+            height: TARGET_HEIGHT,
+            opacity: 1,
+            transform: "scale(1)",
+          });
+        }
+      });
     });
     return () => cancelAnimationFrame(timer);
-  }, []);
+  }, [triggerRect]);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-    // Allow closing animation to play before unmounting
+    if (triggerRect) {
+      // Shrink seamlessly back into the exact DOM bounds of the card on the page
+      setStyle({
+        top: `${triggerRect.top}px`,
+        left: `${triggerRect.left}px`,
+        width: `${triggerRect.width}px`,
+        height: `${triggerRect.height}px`,
+        opacity: 1,
+        transform: "scale(1)",
+      });
+    } else {
+      // Fallback close animation
+      setStyle((prev) => ({
+        ...prev,
+        opacity: 0,
+        transform: "scale(0.95)",
+      }));
+    }
+    // Match the 400ms duration
     setTimeout(() => {
       onClose();
-    }, 240);
-  }, [onClose]);
+    }, 400);
+  }, [onClose, triggerRect]);
+
+  const setIndex = useCallback(
+    (idx: number) => {
+      setCurrentIndex(idx);
+      onIndexChange?.(idx);
+    },
+    [onIndexChange]
+  );
 
   const goNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+    setIndex((currentIndex + 1) % images.length);
+  }, [currentIndex, images.length, setIndex]);
 
   const goPrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
+    setIndex((currentIndex - 1 + images.length) % images.length);
+  }, [currentIndex, images.length, setIndex]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -81,18 +158,24 @@ export function Lightbox({
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/85 backdrop-blur-md transition-opacity duration-240 ease-out select-none ${
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-      }`}
-      onClick={handleClose}
+      className="fixed inset-0 z-10000 pointer-events-none flex flex-col items-center justify-center"
       role="dialog"
       aria-modal="true"
       aria-label="Image preview"
     >
+      {/* Dark backdrop fading in smoothly */}
+      <div
+        className={`absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
+        onClick={handleClose}
+        aria-hidden="true"
+      />
+
       {/* Top Header Controls */}
       <div
-        className={`absolute top-4 inset-x-6 flex items-center justify-between z-10 pointer-events-none transition-all duration-250 ease-out ${
-          isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
+        className={`absolute top-4 inset-x-6 flex items-center justify-between z-20 pointer-events-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
         {/* Counter */}
@@ -126,21 +209,17 @@ export function Lightbox({
         </button>
       </div>
 
-      {/* Main image container: smooth scale + fade entrance and exit */}
+      {/* Main Image Container — Animated directly via inline styles for FLIP effect */}
       <div
-        className={`relative mx-auto flex h-[75vh] w-[92vw] max-w-5xl items-center justify-center transition-all duration-300 ease-out ${
-          isOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4"
-        }`}
-        onClick={(e) => e.stopPropagation()}
+        className="absolute z-10 flex items-center justify-center overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto"
+        style={style}
+        onClick={(e) => e.stopPropagation()} // don't close when clicking the image itself
       >
         <Image
-          key={currentIndex}
           src={images[currentIndex]}
           alt={`${alt} — preview ${currentIndex + 1}`}
           fill
-          className="rounded-lg object-contain drop-shadow-2xl select-none transition-opacity duration-200"
+          className="rounded-lg object-contain drop-shadow-2xl select-none"
           sizes="(max-width: 1024px) 95vw, 1200px"
           priority
         />
@@ -154,10 +233,8 @@ export function Lightbox({
               e.stopPropagation();
               goPrev();
             }}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-250 ease-out hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 ${
-              isOpen
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-4 pointer-events-none"
+            className={`absolute left-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
+              isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
             }`}
             aria-label="Previous image"
           >
@@ -180,10 +257,8 @@ export function Lightbox({
               e.stopPropagation();
               goNext();
             }}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-250 ease-out hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 ${
-              isOpen
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-4 pointer-events-none"
+            className={`absolute right-4 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-border-primary bg-bg-secondary/90 text-fg-secondary shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-bg-tertiary hover:text-fg-primary hover:scale-105 active:scale-95 pointer-events-auto ${
+              isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"
             }`}
             aria-label="Next image"
           >
@@ -207,17 +282,15 @@ export function Lightbox({
       {/* Bottom Thumbnail Strip */}
       {images.length > 1 && (
         <div
-          className={`absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2.5 rounded-xl border border-border-primary bg-bg-secondary/85 p-2 shadow-xl backdrop-blur-md transition-all duration-250 ease-out ${
-            isOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
+          className={`absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2.5 rounded-xl border border-border-primary bg-bg-secondary/85 p-2 shadow-xl backdrop-blur-md transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${
+            isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
           {images.map((img, i) => (
             <button
               key={i}
-              onClick={() => setCurrentIndex(i)}
+              onClick={() => setIndex(i)}
               className={`relative h-12 w-14 overflow-hidden rounded-md border transition-all duration-200 ${
                 i === currentIndex
                   ? "border-accent ring-2 ring-accent/40 opacity-100 scale-105"
