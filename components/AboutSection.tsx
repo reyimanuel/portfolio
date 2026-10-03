@@ -6,7 +6,7 @@ export function AboutSection() {
   return (
     <section id="about" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeader number="01" label="ABOUT" title="A Bit More" />
+        <SectionHeader label="ABOUT" title="A Bit More" />
 
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-[2fr_1fr] md:gap-16">
           {/* Left column */}

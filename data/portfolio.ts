@@ -173,9 +173,9 @@ export const projects: Project[] = [
       "A full-stack web application delivering end-to-end double-entry bookkeeping, automated financial reporting, and digital storefront management tailored for small and medium-sized enterprises (MSMEs).",
     technologies: ["Laravel", "MySQL", "Tailwind CSS", "PHP"],
     images: [
-      "/projects/skilusku 1.png",
-      "/projects/skilusku 2.png",
-      "/projects/skilusku 3.png",
+      "/projects/siklusku 1.png",
+      "/projects/siklusku 2.png",
+      "/projects/siklusku 3.png",
     ],
   },
 ];

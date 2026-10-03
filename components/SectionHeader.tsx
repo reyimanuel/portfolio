@@ -1,5 +1,4 @@
 export interface SectionHeaderProps {
-  number: string;
   label: string;
   title: string;
   description?: string;
@@ -7,13 +6,11 @@ export interface SectionHeaderProps {
 }
 
 export function SectionHeader({
-  number,
   label,
   title,
   description,
   className = "",
 }: SectionHeaderProps) {
-  const formattedNumber = number.endsWith(".") ? number : `${number}.`;
 
   return (
     <div
@@ -21,7 +18,6 @@ export function SectionHeader({
     >
       {/* Monospace section indicator */}
       <div className="flex items-center gap-2 font-mono text-sm text-accent tracking-wider uppercase">
-        <span>{formattedNumber}</span>
         <span>{label}</span>
       </div>
 

@@ -5,11 +5,7 @@ export function CommunitySection() {
   return (
     <section className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeader
-          number="02"
-          label="BEYOND CODE"
-          title="Organization & Volunteer"
-        />
+        <SectionHeader label="BEYOND CODE" title="Organization & Volunteer"/>
 
         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           {community.map((item) => (

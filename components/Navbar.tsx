@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { navLinks, profile } from "@/data/portfolio";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useActiveSection } from "@/hooks/useScrollReveal";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const activeSection = useActiveSection(navLinks.map((l) => l.href));
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -50,9 +52,14 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-fg-secondary transition-colors duration-200 hover:text-fg-primary"
+                className={`relative text-sm transition-colors duration-200 hover:text-fg-primary ${
+                  link.href === activeSection ? 'text-accent' : 'text-fg-secondary'
+                }`}
               >
                 {link.label}
+                {link.href === activeSection && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full" />
+                )}
               </a>
             ))}
           </nav>

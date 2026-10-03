@@ -3,17 +3,9 @@ import { SectionHeader } from "@/components/SectionHeader";
 
 export function ExperienceTimeline() {
   return (
-    <section
-      id="experience"
-      className="py-24 md:py-32"
-      aria-labelledby="experience-title"
-    >
+    <section id="experience" className="py-24 md:py-32" aria-labelledby="experience-title">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          number="03"
-          label="EXPERIENCE"
-          title="Engineering Timeline"
-        />
+        <SectionHeader label="EXPERIENCE" title="Engineering Timeline"/>
 
         <div className="mt-16 flex flex-col">
           {experiences.map((exp, index) => (

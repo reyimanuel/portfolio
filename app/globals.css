@@ -25,6 +25,9 @@
   --accent-muted: rgba(34, 211, 238, 0.08);
   --accent-muted-strong: rgba(34, 211, 238, 0.15);
 
+  --accent-warm: #f59e0b;
+  --accent-warm-muted: rgba(245, 158, 11, 0.1);
+
   --surface-code: #141418;
 
   color-scheme: dark;
@@ -49,6 +52,9 @@
   --accent-hover: #0e7490;
   --accent-muted: rgba(8, 145, 178, 0.06);
   --accent-muted-strong: rgba(8, 145, 178, 0.12);
+
+  --accent-warm: #d97706;
+  --accent-warm-muted: rgba(217, 119, 6, 0.08);
 
   --surface-code: #f0f0f3;
 
@@ -78,10 +84,14 @@
   --color-accent-muted: var(--accent-muted);
   --color-accent-muted-strong: var(--accent-muted-strong);
 
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-warm-muted: var(--accent-warm-muted);
+
   --color-surface-code: var(--surface-code);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument-serif);
 }
 
 /* ==========================================================================
